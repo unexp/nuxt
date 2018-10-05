@@ -5,11 +5,12 @@
       <!-- <button @click="$router.push('/admin/new-post')">Create Post</button> -->
       <!-- i want to use AppButton -->
       <AppButton @click="$router.push('/admin/new-post')">Create Post</AppButton>
+      <AppButton @click.prevent="editPost">Edit Post</AppButton>
     </section>
 
     <section class="existing-posts">
       <h1>Existing Posts</h1>
-      <PostList isAdmin />
+      <PostList isAdmin :posts="loadedPosts"/>
     </section>
   </div>
 </template>
@@ -23,6 +24,19 @@ export default {
   components: {
     PostList,
     AppButton
+  },
+
+  methods: {
+    editPost(event) {
+      console.log(event)
+      this.$router.push('/admin/11')
+    }
+  },
+
+  computed: {
+    loadedPosts() {
+      return this.$store.getters.loadedPosts
+    }
   }
 }
 </script>

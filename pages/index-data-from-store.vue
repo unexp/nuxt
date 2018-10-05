@@ -74,12 +74,12 @@ export default {
 
   // 通过 nuxtServerInit 加载数据之后
   // 从首页切换到 /pages/post.vue 看看速度是不是快了很多，没有加载状态了！
-  // 
-  computed: {
-    loadedPosts() {
-      return this.$store.getters.loadedPosts
-    }
-  }
+ computed: {
+   loadedPosts() {
+     return this.$store.getters.loadedPosts
+   }
+ }
+
 }
 </script>
 

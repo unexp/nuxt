@@ -212,3 +212,20 @@ create `store/index.js` Nuxt 会帮我们注入到每个 component
 // 我们使用 fetch() 代替 asyncData(), 然后在 then() 里把数据放到 store
 // fetch() 和 asyncData() 一样是 Nuxt 提供的 property, 用法几乎一样
 // 但是必须返回 Promise
+
+// nuxtServerInit() 了解下
+
+## fetch data on the server (our server)
+
+nuxt run on the server
+
+checkout firebase
+使用 firebase 提供的 databse
+
+## 注意一点！
+
+尽管 Nuxt 可以在服务端渲染，但是它和 express 不一样！
+所以，nuxt 我们不会直接去连接数据库、操作数据库！我们可以访问一些服务端的资源 例如 request 的参数等等
+不能把 Nuxt 当中 backend!
+它和普通的 SPA 是一样的，不同的是，Nuxt 可以在服务端（服务器上）去请求后端的接口（把数据拿回来）
+然后把 index.html 渲染好再把 index.html 传给前端！

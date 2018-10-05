@@ -17,6 +17,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   asyncData(context, callback) {
     // promise base -- 不用 callback 入参 (可以把它删了)
@@ -51,23 +53,46 @@ export default {
 
     // callback base
     setTimeout(() => {
-      callback(null, {
-        loadedPost: {
-          id: '1',
-          author: 'Byer',
-
-          // 注意在 asyncData `this.$route.params` 是不可以的
-          // 因为 this 指向的不是 vue instance (asyncData 在 vue instance 创建之前就运行了)
-          // 所以要用 `context.params`
-          title: 'My awesome Post (ID: ' + context.route.params.id +')',
-
-          updatedDate: new Date(),
-          content: 'The command line is a user interface that doesn’t get enough attention in the world of JavaScript development. The reality is that most dev tools should have a CLI to be utilized by nerds like us, and the user experience should be on par with that of your meticulously-created web app. This includes a nice design, helpful menus, clean error messages and outputs, loading indicators and progress bars, and so on.',
-          previewText: 'Nuxt.js will automatically guess the file type by its extension and use the appropriate pre-processor loader for webpack.',
-          thumbnail: 'https://www.dreamhost.com/blog/wp-content/uploads/2016/08/DreamHost-Top-Tech-Trends.jpg'
-        }
+      console.log('context.params.postId', context.params.postId)
+      axios.get('https://nuxt-7de9c.firebaseio.com/posts/' + context.params.postId + '.json')
+      .then(res => {
+        console.log(res)
+        callback(null, {
+          loadedPost: { ...res.data, id: context.params.postId }
+        })
       })
+      .catch(e => {
+        context.error(e)
+      })
+
+      // callback(null, {
+      //   loadedPost: {
+      //     id: '1',
+      //     author: 'Byer',
+
+      //     // 注意在 asyncData `this.$route.params` 是不可以的
+      //     // 因为 this 指向的不是 vue instance (asyncData 在 vue instance 创建之前就运行了)
+      //     // 所以要用 `context.params`
+      //     title: 'My awesome Post (ID: ' + context.route.params.id +')',
+
+      //     updatedDate: new Date(),
+      //     content: 'The command line is a user interface that doesn’t get enough attention in the world of JavaScript development. The reality is that most dev tools should have a CLI to be utilized by nerds like us, and the user experience should be on par with that of your meticulously-created web app. This includes a nice design, helpful menus, clean error messages and outputs, loading indicators and progress bars, and so on.',
+      //     previewText: 'Nuxt.js will automatically guess the file type by its extension and use the appropriate pre-processor loader for webpack.',
+      //     thumbnail: 'https://www.dreamhost.com/blog/wp-content/uploads/2016/08/DreamHost-Top-Tech-Trends.jpg'
+      //   }
+      // })
     }, 1000)
+
+    // return axios.get('https://nuxt-7de9c.firebaseio.com/posts/-LO2w4gbGiae30R3gSPH.json')
+    //   .then(res => {
+    //     console.log(res)
+    //     return {
+    //       loadedPost: res.data
+    //     }
+    //   })
+    //   .catch(e => {
+    //     context.error(e)
+    //   })
   }
 }
 </script>
