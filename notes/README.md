@@ -68,6 +68,34 @@ error.vue nuxt 预留 (nuxt 提供了一个默认的 error layout, 你可以通�
 // custom layout
 user.vue
 
+Nuxt 会创建一个 index.html(你看不到这个 html) 然后把 layout 引进去！
+有点像你在写 Vue 的时候：
+
+```html
+<!DOCTYPE html>
+<html><head></head><body>
+  <div id="app">
+    Layout will ben loaded here~
+  </div>
+</body></html>
+```
+
+如何指定页面使用哪个 Layout?
+pages/admin/index.vue (注意，admin/下 每个页面都需要加上)
+pages/admin/xx/xx.vue (注意，admin/下 每个页面都需要加上)
+
+```js
+export default {
+  ...
+  data() { return {} }
+  ...
+
+  layout: 'admin', // 指定用哪个 Layout/admin
+
+  ...
+}
+```
+
 ## components
 
 can use in components
@@ -96,3 +124,8 @@ go to "nuxt.config.js" find:
 `inline style`
 v-bind:style
 v-bind:class
+
+## Router
+
+Nuxt use Vue-Router
+in Nuxt just use vue-router as you know
