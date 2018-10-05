@@ -1,6 +1,6 @@
 <template>
   <section class="post-list">
-    <PostPreview 
+    <!-- <PostPreview 
       id="1"
       :is-admin="isAdmin"
       thumbnail="https://www.dreamhost.com/blog/wp-content/uploads/2016/08/DreamHost-Top-Tech-Trends.jpg"
@@ -20,6 +20,15 @@
       thumbnail="https://www.dreamhost.com/blog/wp-content/uploads/2016/08/DreamHost-Top-Tech-Trends.jpg"
       title="GoodBye!"
       previewText="This my third post!"
+    /> -->
+    <PostPreview 
+      v-for="post in posts"
+      :key="post.id"
+      :id="post.id"
+      :is-admin="isAdmin"
+      :thumbnail="post.thumbnail"
+      :title="post.title"
+      :previewText="post.previewText"
     />
   </section>
 </template>
@@ -36,6 +45,12 @@ export default {
     isAdmin: {
       type: Boolean,
       defaule: false
+    },
+
+    // 需要动态的展示 List
+    posts: {
+      type: Array,
+      require: true
     }
   }
 }

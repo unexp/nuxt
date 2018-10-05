@@ -129,3 +129,86 @@ v-bind:class
 
 Nuxt use Vue-Router
 in Nuxt just use vue-router as you know
+
+## Handling Data & Vuex
+
+## asyncData()
+
+```js
+  // callback base
+  asyncData(context, callback) {
+    // context 里面有哪些东西？
+
+    // 第一个参数是 error, 第二个参数是返回的数据
+    callback(null, {
+
+    })
+
+    // what if we asyncData fail?
+    // Nuxt 会跳到 layout/error.vue 错误页面！
+    callback(new Error(), {
+
+    })
+  }
+
+  // promise base
+  asyncData(context) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      // 成功
+      resolve({
+        loadedPost: {
+          id: '1',
+          author: 'Byer',
+
+          // 注意在 asyncData `this.$route.params` 是不可以的
+          // 因为 this 指向的不是 vue instance (asyncData 在 vue instance 创建之前就运行了)
+          // 所以要用 `context.params`
+          title: 'My awesome Post (ID: ' + context.route.params.id +')',
+
+          updatedDate: new Date(),
+          content: 'The command line is a user interface that doesn’t get enough attention in the world of JavaScript development. The reality is that most dev tools should have a CLI to be utilized by nerds like us, and the user experience should be on par with that of your meticulously-created web app. This includes a nice design, helpful menus, clean error messages and outputs, loading indicators and progress bars, and so on.',
+          previewText: 'Nuxt.js will automatically guess the file type by its extension and use the appropriate pre-processor loader for webpack.',
+          thumbnail: 'https://www.dreamhost.com/blog/wp-content/uploads/2016/08/DreamHost-Top-Tech-Trends.jpg'
+        }
+      })
+
+      // 失败
+      // reject(new Error())
+    }, 1000)
+  }).then(data => {
+    return data
+  }).catch(e => {
+    context.error(e)
+  })
+```
+
+## Loaded Data in Store/Vuex
+
+有些数据跨模块使用，我们不想每个模块/pages 都去加载，我们想把数据加载到 Store 里
+Vuex in Nuxt.js
+
+- Classic Mode
+- Modules Mode
+
+区别可以看一下 notes/images/vuex in nuxt
+
+create `store/index.js` Nuxt 会帮我们注入到每个 component
+然后你到一个 component 里就可以使用：
+
+```js
+  created() {
+    // 因为Nuxt会把store注入每个 component, 所以这里我们可以直接用
+    //
+    // 但是，这并不是最好的方式！
+    // we should loaded our store in the server first loaded pages
+    // 而不是通过 asyncData 去取数据（虽然也是在服务端运行）
+    this.$store.dispatch('setPosts', this.loadedPosts)
+    console.log(this.$store)
+  }
+```
+
+// 如上面的备注：我们想页面在服务端第一次加载的时候就 加载我们的 Store
+// 我们使用 fetch() 代替 asyncData(), 然后在 then() 里把数据放到 store
+// fetch() 和 asyncData() 一样是 Nuxt 提供的 property, 用法几乎一样
+// 但是必须返回 Promise
