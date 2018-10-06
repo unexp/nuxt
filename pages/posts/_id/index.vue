@@ -52,18 +52,19 @@ export default {
     // })
 
     // callback base
-    setTimeout(() => {
-      console.log('context.params.postId', context.params.postId)
-      axios.get('https://nuxt-7de9c.firebaseio.com/posts/' + context.params.postId + '.json')
-      .then(res => {
-        console.log(res)
-        callback(null, {
-          loadedPost: { ...res.data, id: context.params.postId }
-        })
-      })
-      .catch(e => {
-        context.error(e)
-      })
+    // setTimeout(() => {
+    //   console.log(context)
+    //   console.log('context.params.postId', context.params.postId)
+    //   axios.get('https://nuxt-7de9c.firebaseio.com/posts/' + context.params.postId + '.json')
+    //   .then(res => {
+    //     console.log(res)
+    //     callback(null, {
+    //       loadedPost: { ...res.data, id: context.params.postId }
+    //     })
+    //   })
+    //   .catch(e => {
+    //     context.error(e)
+    //   })
 
       // callback(null, {
       //   loadedPost: {
@@ -81,7 +82,20 @@ export default {
       //     thumbnail: 'https://www.dreamhost.com/blog/wp-content/uploads/2016/08/DreamHost-Top-Tech-Trends.jpg'
       //   }
       // })
-    }, 1000)
+    // }, 1000)
+
+    console.log(context)
+    axios.get('https://nuxt-7de9c.firebaseio.com/posts/' + context.params.id + '.json')
+    .then(res => {
+      console.log(res)
+      console.log('context.params.postId', context.params.id)
+      callback(null, {
+        loadedPost: { ...res.data, id: context.params.id }
+      })
+    })
+    .catch(e => {
+      context.error(e)
+    })
 
     // return axios.get('https://nuxt-7de9c.firebaseio.com/posts/-LO2w4gbGiae30R3gSPH.json')
     //   .then(res => {
