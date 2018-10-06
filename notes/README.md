@@ -229,3 +229,19 @@ checkout firebase
 不能把 Nuxt 当中 backend!
 它和普通的 SPA 是一样的，不同的是，Nuxt 可以在服务端（服务器上）去请求后端的接口（把数据拿回来）
 然后把 index.html 渲染好再把 index.html 传给前端！
+
+just do pre-render
+
+## Nuxt Config, Plugins & Modules
+
+Extending Functionality
+
+```base
+`nuxt.config.js` (render by nuxt)
+
+nuxt.config.js
+
+module.exports = {
+
+}
+```
