@@ -297,3 +297,72 @@ export default {
 https://firebase.google.com/docs/reference/rest/auth/
 
 401 Unauthorized => error: "Permission denied"
+
+
+## Focusing on the Server-Side (Nuxt and Server side)
+connect to our custom express server~
+
+**如果所有的接口都自己来写！create-nuxt-app 的时候选择 Custom express 的模板**
+
+## Deployment
+
+可以打三种包：
+Universal vs SPA vs Static
+
+
+### Universal -- we need node server
+```
+  1. nuxt.config.js => mode: 'universal'
+  2. npm run build
+  3. 打包后得到 .nuxt/ 
+  4. 把所有的文件（包括你的源文件，以及打包出来的 .nuxt/, 当然node_modules/除外）上传到你的 Node Server, 
+  5. 然后 Node Server 运行 npm start
+```
+
+
+### SPA -- we don't need node server (Just SPA not server pre-rendering)
+注意一点：如果你开发的是 SPA 记得不要用 nuxtServerInit() 来加载数据
+数据加载放在你的 vue instance
+并且需要保证你的 Web Server 会把index.html 返回回来
+```
+1. nuxt.config.js => mode: 'spa'
+2. npm run build
+3. 打包后得到 ./dist/ 
+4. 只要把 dist/ 上传到任何(apache/nginx/...) Web Server 就可以了
+```
+
+### Static -- we don't need node server
+generate entry app static file
+很多地方需要注意点，参考官方文档！
+```
+1. nuxt.config.js => mode: 'static'
+2. npm run generate
+3. 打包后得到 ./dist/  (每个路由会打包出一个文件夹)
+4. 只要把 dist/ 上传到任何(apache/nginx/...) Web Server 就可以了
+
+dacymic route 需要在这里配置
+nuxt.config.js => 
+generate: function() {
+  return [
+    /posts/-LyYYa1tGt31gTsy
+  ]
+}
+
+// 这里也可以写请求
+generate: {
+  reoutes: function() {
+    return axios.get('https://nuxt.firebaseio.com/posts.json)
+      .then(res => {
+        const routes = []
+        for (const key in res.data) {
+          reoutes.push({
+            route: '/posts/' + key,
+            payload: { postData: res.data[key] }
+          })
+        }
+
+        return routes
+      })
+  }
+}
+```

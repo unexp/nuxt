@@ -6,7 +6,7 @@
       <!-- i want to use AppButton -->
       <AppButton @click="$router.push('/admin/new-post')">Create Post</AppButton>
       <!-- <AppButton @click.prevent="editPost">Edit Post</AppButton> -->
-      <AppButton @click.prevent="onLogout">Logout</AppButton>
+      <AppButton @click="onLogout">Logout</AppButton>
     </section>
 
     <section class="existing-posts">
@@ -42,8 +42,10 @@ export default {
   computed: {
     loadedPosts() {
       return this.$store.getters.loadedPosts
-    },
+    }
+  },
 
+  methods: {
     onLogout() {
       this.$store.dispatch('logout')
       this.$router.push('/admin/auth')

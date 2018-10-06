@@ -1,5 +1,6 @@
 const pkg = require('./package')
-
+const bodyParser = require('body-parser')
+ 
 // https://nuxtjs.org/guide/configuration
 module.exports = {
   mode: 'universal', // spa、universal
@@ -101,6 +102,8 @@ module.exports = {
     //
     // 如果使用的 RESTFul API, 是不需要带 cookie 的
     // credentials: false
+
+    baseUrl: process.env.BASE_URL || 'http://localhost:3000'
   },
 
   /*
@@ -164,5 +167,11 @@ module.exports = {
   transition: {
     name: 'fade', // fade 使我们定义的 css class-name (在assets/styles/main.css), 去看一下页面间跳转有啥变化
     mode: 'out-in'
-  }
+  },
+
+  // can add any express middle here
+  serverMiddleware: [
+    bodyParser.json(),
+    '~/api'
+  ]
 }

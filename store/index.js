@@ -237,6 +237,17 @@ const createStore = () => {
             // setTimeout 页面刷，如果同一个站点开两个Tab，会影响计算计算吗？
             // 统一在 initAuth action 里面做判断
             // vuexContext.dispatch('setLogoutTimer', res.data.expiresIn * 1000)
+
+
+            // 这里做个 Demo, 授权的时候请求自己的后台接口
+            // 这里我们去访问自己的 Express  RESTFul API (./api/index.js)
+            // return axios.post('http://localhost:3000/api/track-data', {
+            //   data: 'Authenticated!'
+            // })
+            // 如果你配置了 axios 的 baseUrl, 那么你可以不写 baseUrl (你在其它的代码里经常会见到这样的)
+            return this.$axios.$post('/api/track-data', {
+              data: 'Authenticated! API from your own server...'
+            })
           })
           .catch(e => {
             console.log(e)
@@ -294,7 +305,7 @@ const createStore = () => {
 
           // 清掉 Token, 重新授权（middleware/auth.js 重定向到登录页面）
           // vuexContext.commit('clearToken')
-          vuexContext.commit('logout')
+          vuexContext.dispatch('logout')
 
           return
         }
@@ -308,7 +319,7 @@ const createStore = () => {
         vuexContext.commit('clearToken')
 
         // 删除 cookie token 数据
-        Cookie.remove('token')
+        Cookie.remove('jwt')
         Cookie.remove('expirationDate')
 
         // 删除 localStorage token 数据
