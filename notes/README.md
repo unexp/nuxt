@@ -245,3 +245,55 @@ module.exports = {
 
 }
 ```
+
+## Middleware & Authentication
+
+#### Middleware 使用常见有哪些？-- before you enter new route 需要执行的代码
+
+**middleware are a function and run, before the route/page is loaded**
+**if middleware function are async -- you should return Promise**
+**if middleware function are sync -- you don't need to return anything**
+**will run on the server in the first loaded, alose run on the client!**
+
+need attached to our pages
+
+```
+xx.vue
+export default {
+  ...
+  middleware: 'log'
+}
+```
+
+````
+// Need attached to our pages/layout (or to both)
+// ```
+// attach to pages/xx.vue
+// export default {
+//   ...
+//   middleware: 'log'
+// }
+// ```
+//
+// attach to layout/xx.vue
+// export default {
+//   ...
+//   middleware: 'log'
+// }
+// ```
+
+// Also you can attach to nuxt.config.js => router: {}
+// nuxt.config.js
+// module.exports = {
+//   router: {
+//      middleware: 'log'
+//   }
+// }
+// ```
+````
+
+### 使用 firebase 提供的 Authentication RESTFul API
+
+https://firebase.google.com/docs/reference/rest/auth/
+
+401 Unauthorized => error: "Permission denied"

@@ -124,6 +124,10 @@ module.exports = {
     // baseUrl: process.env.BASE_URL || 'https://nuxt.firebaseio.com'
     // 使用 process.env.BASE_URL(这类的变量也叫系统环境变量) 的好处是：
     // 你不用改动你的代码，只需要在服务器上设置一下系统变量就可以了 export BASE_URL=https://api.mydomain.com
+
+    // firebase APIKey
+    // 在你的代码里直接访问 process.env.fbAPIKey
+    fbAPIKey: 'AIzaSyDHefltbDHfBLtO2Tc3__lHXxHp4wCwXWE'
   },
 
   // static site generate settings

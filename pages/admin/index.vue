@@ -5,7 +5,8 @@
       <!-- <button @click="$router.push('/admin/new-post')">Create Post</button> -->
       <!-- i want to use AppButton -->
       <AppButton @click="$router.push('/admin/new-post')">Create Post</AppButton>
-      <AppButton @click.prevent="editPost">Edit Post</AppButton>
+      <!-- <AppButton @click.prevent="editPost">Edit Post</AppButton> -->
+      <AppButton @click.prevent="onLogout">Logout</AppButton>
     </section>
 
     <section class="existing-posts">
@@ -21,6 +22,7 @@ import AppButton from '@/components/UI/AppButton'
 
 export default {
   layout: 'admin', // 指定用哪个 Layout/admin
+  middleware: ['check-auth', 'auth'], // middleware/check-auth.js, middleware/auth.js
   components: {
     PostList,
     AppButton
@@ -33,9 +35,18 @@ export default {
     }
   },
 
+  created() {
+    console.log('admin page...')
+  },
+
   computed: {
     loadedPosts() {
       return this.$store.getters.loadedPosts
+    },
+
+    onLogout() {
+      this.$store.dispatch('logout')
+      this.$router.push('/admin/auth')
     }
   }
 }
