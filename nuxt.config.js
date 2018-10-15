@@ -59,7 +59,10 @@ module.exports = {
   */
   css: [
     // '~assets/css/main.css',
-    '~assets/styles/main.css'
+    '~assets/styles/main.css',
+
+    // 也可以访问 node_modules package 里面的CSS
+    'element-ui/lib/theme-chalk/index.css'
   ],
 
   /*
@@ -71,7 +74,9 @@ module.exports = {
   plugins: [
     // 例如一些多模块都用到的 components
     '~plugins/core-components.js',
-    '~plugins/date-filter.js'
+    '~plugins/date-filter.js',
+    // '@/plugins/element-ui'
+    '~plugins/element-ui'
   ],
 
   /*
